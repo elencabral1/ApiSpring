@@ -26,7 +26,6 @@ public class HotelController {
 
     @PostMapping
     public void save(@RequestBody @Valid HotelDto hotelDto) {
-        System.out.println("chegou no controller");
         hotelService.saveHotel(hotelDto);
     }
 

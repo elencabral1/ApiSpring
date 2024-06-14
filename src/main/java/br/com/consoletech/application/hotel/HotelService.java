@@ -22,8 +22,6 @@ public class HotelService {
     @Transactional
     public void saveHotel(HotelDto hotelDto) {
         Hotel hotel = HotelMapper.toEntity(hotelDto);
-        System.out.println("chegou no service");
-        System.out.println(hotel);
         hotelRepository.save(hotel);
     }
 
