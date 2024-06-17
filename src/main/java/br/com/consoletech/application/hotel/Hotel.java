@@ -1,14 +1,12 @@
 package br.com.consoletech.application.hotel;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Table(name= "hotel")
 @Entity
@@ -18,8 +16,10 @@ public class Hotel {
 
     @Column(name = "echoToken")
     private String echoToken;
-    @Column(name = "timestamp")
-    private String timestamp;
+    @Column(name = "receivableDate")
+    private String receivableDate;
+    @Column(name = "messageId", unique = true, nullable = false)
+    private String messageId;
     @Column(name = "sourceId")
     private String sourceId;
     @Id
@@ -30,15 +30,19 @@ public class Hotel {
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private Set<RatePrice> ratePrices;
 
-    public Hotel() {}
+    public Hotel() {
+        this.messageId = UUID.randomUUID().toString();
+    }
 
     public Hotel(String hotelId){
         this.hotelId = hotelId;
+        this.messageId = UUID.randomUUID().toString();
     }
 
     public Hotel(HotelDto hotelDto) {
         this.echoToken = hotelDto.echoToken();
-        this.timestamp = hotelDto.timestamp();
+        this.receivableDate = hotelDto.receivableDate();
+        this.messageId = UUID.randomUUID().toString() ;
         this.sourceId = hotelDto.sourceId();
         this.hotelId = hotelDto.hotelId();
         this.rateId = hotelDto.rateId();
@@ -55,12 +59,18 @@ public class Hotel {
         this.echoToken = echoToken;
     }
 
-    public String getTimestamp() {
-        return timestamp;
+    public String getReceivableDate() {
+        return receivableDate;
     }
 
-    public void setTimestamp(String timestamp) {
-        this.timestamp = timestamp;
+    public void setReceivableDate(String receivableDate) {
+        this.receivableDate = receivableDate;
+    }
+
+    public String getMessageId() { return messageId;
+    }
+
+    public void setMessageId(String messageId) { this.messageId = messageId;
     }
 
     public String getSourceId() {
@@ -97,7 +107,8 @@ public class Hotel {
 
     public Hotel(Hotel hotel, Set<RatePrice> ratePrices) {
         this.echoToken = hotel.echoToken;
-        this.timestamp = hotel.timestamp;
+        this.receivableDate = hotel.receivableDate;
+        this.messageId = hotel.messageId;
         this.sourceId = hotel.sourceId;
         this.hotelId = hotel.hotelId;
         this.rateId = hotel.rateId;
