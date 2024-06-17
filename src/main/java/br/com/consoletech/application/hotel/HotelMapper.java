@@ -10,7 +10,7 @@ public class HotelMapper {
         Hotel hotel = new Hotel();
         hotel.setHotelId(dto.hotelId());
         hotel.setEchoToken(dto.echoToken());
-        hotel.setTimestamp(dto.timestamp());
+        hotel.setReceivableDate(dto.receivableDate());
         hotel.setSourceId(dto.sourceId());
         hotel.setRateId(dto.rateId());
 
@@ -19,8 +19,8 @@ public class HotelMapper {
             ratePrice.setRoomTypeId(ratePriceDTO.roomTypeId());
             ratePrice.setHotel(hotel);
 
-            Set<Price> prices = ratePriceDTO.prices().stream().map(priceDTO -> {
-                Price price = new Price();
+            Set<RatePeriod> prices = ratePriceDTO.prices().stream().map(priceDTO -> {
+                RatePeriod price = new RatePeriod();
                 price.setFrom(priceDTO.from());
                 price.setTo(priceDTO.to());
                 price.setRatePrice(ratePrice);
@@ -46,14 +46,14 @@ public class HotelMapper {
     }
     public static HotelDto toDto(Hotel hotel) {
         Set<RatePriceDto> ratePrices = hotel.getRatePrices().stream().map(ratePrice -> {
-            Set<PriceDto> prices = ratePrice.getPriceList().stream().map(price -> {
+            Set<RatePeriodDto> prices = ratePrice.getPriceList().stream().map(price -> {
                 List<PaxDto> paxes = price.getPaxList().stream().map(pax -> new PaxDto(pax.getCapacity(), pax.getPrice())).collect(Collectors.toList());
-                return new PriceDto(price.getFrom(), price.getTo(), paxes);
+                return new RatePeriodDto(price.getFrom(), price.getTo(), paxes);
             }).collect(Collectors.toSet());
             return new RatePriceDto(ratePrice.getRoomTypeId(), prices);
         }).collect(Collectors.toSet());
 
-        return new HotelDto(hotel.getEchoToken(), hotel.getTimestamp(), hotel.getSourceId(), hotel.getHotelId(), hotel.getRateId(), ratePrices);
+        return new HotelDto(hotel.getEchoToken(), hotel.getReceivableDate(), hotel.getSourceId(), hotel.getHotelId(), hotel.getRateId(), ratePrices);
     }
 
 }

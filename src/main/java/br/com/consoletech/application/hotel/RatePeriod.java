@@ -1,7 +1,6 @@
 package br.com.consoletech.application.hotel;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 
@@ -10,12 +9,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Entity
-@Table(name = "price")
-public class Price {
+@Table(name = "ratePeriod")
+public class RatePeriod {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer priceId;
+    private Integer ratePeriodId;
 
     @Column(name = "`from`")
     private Date from;
@@ -32,8 +31,8 @@ public class Price {
     @OneToMany(mappedBy = "prices", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Pax> paxList;
 
-    public Price(){}
-    public Price(PriceDto dto) {
+    public RatePeriod(){}
+    public RatePeriod(RatePeriodDto dto) {
         this.from = dto.from();
         this.to = dto.to();
         this.paxList = dto.pax().stream()
@@ -41,19 +40,18 @@ public class Price {
                 .collect(Collectors.toList());
     }
 
-    public Price(RatePrice ratePrice, Price price, List<Pax> paxList){
+    public RatePeriod(RatePrice ratePrice, RatePeriod price, List<Pax> paxList){
         this.from = price.from;
         this.to = price.to;
         this.ratePrice = ratePrice;
         this.paxList = paxList;
     }
 
-    public Integer getPriceId() {
-        return priceId;
+
+    public Integer getRatePeriodId() { return ratePeriodId;
     }
 
-    public void setPriceId(Integer priceId) {
-        this.priceId = priceId;
+    public void setRatePeriodId(Integer ratePeriodId) { this.ratePeriodId = ratePeriodId;
     }
 
     public Date getFrom() {

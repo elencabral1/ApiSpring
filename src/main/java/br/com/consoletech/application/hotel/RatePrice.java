@@ -1,9 +1,7 @@
 package br.com.consoletech.application.hotel;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import java.util.List;
+
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -19,7 +17,7 @@ public class RatePrice {
     private String roomTypeId;
 
     @OneToMany(mappedBy = "ratePrice", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    private Set<Price> priceList;
+    private Set<RatePeriod> priceList;
 
     @ManyToOne
     @JoinColumn(name = "hotel_id", nullable = false)
@@ -28,7 +26,7 @@ public class RatePrice {
     public RatePrice(RatePriceDto dto) {
         this.roomTypeId = dto.roomTypeId();
         this.priceList = dto.prices().stream()
-                .map(price -> new Price(price))
+                .map(price -> new RatePeriod(price))
                 .collect(Collectors.toSet());
     }
 
@@ -60,11 +58,11 @@ public class RatePrice {
         this.roomTypeId = roomTypeId;
     }
 
-    public Set<Price> getPriceList() {
+    public Set<RatePeriod> getPriceList() {
         return priceList;
     }
 
-    public void setPriceList(Set<Price> priceList) {
+    public void setPriceList(Set<RatePeriod> priceList) {
         this.priceList = priceList;
     }
 

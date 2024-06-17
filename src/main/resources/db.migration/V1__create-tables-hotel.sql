@@ -1,7 +1,8 @@
 CREATE TABLE hotel (
     hotelId VARCHAR(255) NOT NULL PRIMARY KEY,
     echoToken VARCHAR(100),
-    timestamp VARCHAR(255),
+    receivableDate VARCHAR(255),
+    messageId VARCHAR(255) NOT NULL UNIQUE,
     sourceId VARCHAR(255),
     rateId VARCHAR(255)
 );
@@ -13,8 +14,8 @@ CREATE TABLE ratePrice (
     FOREIGN KEY (hotel_id) REFERENCES hotel(hotelId)
 );
 
-CREATE TABLE price (
-    priceId INT AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE ratePeriod (
+    ratePeriodId INT AUTO_INCREMENT PRIMARY KEY,
     `from` DATE,
     `to` DATE,
     ratePriceId INT,
@@ -25,6 +26,6 @@ CREATE TABLE pax (
     paxId INT AUTO_INCREMENT PRIMARY KEY,
     capacity VARCHAR(10),
     price DECIMAL(10, 2),
-    priceId INT,
-    FOREIGN KEY (priceId) REFERENCES price(paxId)
+    ratePeriodId INT,
+    FOREIGN KEY (ratePeriodId) REFERENCES ratePeriod(ratePeriodId)
 );

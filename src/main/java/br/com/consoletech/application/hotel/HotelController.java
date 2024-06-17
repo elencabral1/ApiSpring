@@ -25,8 +25,10 @@ public class HotelController {
     }
 
     @PostMapping
-    public void save(@RequestBody @Valid HotelDto hotelDto) {
-        hotelService.saveHotel(hotelDto);
+    public ResponseEntity<String> save(@RequestBody @Valid HotelDto hotelDto) {
+        Hotel hotel = hotelService.saveHotel(hotelDto);
+        String message = String.format("Processado com sucesso: messageId %s", hotel.getMessageId());
+        return ResponseEntity.ok(message);
     }
 
     @GetMapping("/{id}")
@@ -40,5 +42,14 @@ public class HotelController {
         }
     }
 
+    @GetMapping("/message/{messageId}")
+    public ResponseEntity<String> getHotelByMessageId(@PathVariable("messageId") String messageId) {
+        Hotel hotel = hotelService.getHotelByMessageId(messageId);
+        if (hotel != null) {
+            return ResponseEntity.ok("Processado");
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }
 

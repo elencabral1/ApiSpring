@@ -20,15 +20,24 @@ public class HotelService {
     }
 
     @Transactional
-    public void saveHotel(HotelDto hotelDto) {
+    public Hotel saveHotel(HotelDto hotelDto) {
         Hotel hotel = HotelMapper.toEntity(hotelDto);
         hotelRepository.save(hotel);
+        return hotel;
     }
 
 
     @Transactional(readOnly = true)
     public Hotel getHotelById(String hotelId) {
         Optional<Hotel> optionalHotel = hotelRepository.findById(hotelId);
+        return optionalHotel.orElse(null);
+    }
+
+
+    @Transactional(readOnly = true)
+    public Hotel getHotelByMessageId(String messageId) {
+        System.out.println(messageId);
+        Optional<Hotel> optionalHotel = hotelRepository.findByMessageId(messageId);
         return optionalHotel.orElse(null);
     }
 

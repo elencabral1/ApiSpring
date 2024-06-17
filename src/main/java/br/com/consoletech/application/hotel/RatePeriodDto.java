@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-public record PriceDto(
+public record RatePeriodDto(
         @NotNull
         Date from,
         @NotNull
@@ -13,7 +13,7 @@ public record PriceDto(
         @NotNull
         List<PaxDto> pax
 ) {
-    public PriceDto {
+    public RatePeriodDto {
         Objects.requireNonNull(from, "From date must not be null");
         Objects.requireNonNull(to, "To date must not be null");
         Objects.requireNonNull(pax, "Pax list must not be null");

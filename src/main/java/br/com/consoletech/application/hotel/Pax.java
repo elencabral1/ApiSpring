@@ -17,8 +17,8 @@ public class Pax {
     private Double price;
 
     @ManyToOne
-    @JoinColumn(name = "priceId", nullable = false)
-    private Price prices;
+    @JoinColumn(name = "ratePeriodId", nullable = false)
+    private RatePeriod prices;
 
 
     public Pax(){}
@@ -53,17 +53,17 @@ public class Pax {
         this.price = price;
     }
 
-    public Price getPrices() {
+    public RatePeriod getPrices() {
         return prices;
     }
 
-    public Pax(Pax pax, Price price){
+    public Pax(Pax pax, RatePeriod price){
         this.capacity = pax.capacity;
         this.price = pax.price;
         this.prices = price;
     }
 
-    public void setPrices(Price prices) {
+    public void setPrices(RatePeriod prices) {
         this.prices = prices;
     }
 }
