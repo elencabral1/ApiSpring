@@ -1,17 +1,10 @@
 package br.com.consoletech.application.hotel;
 
+import br.com.consoletech.application.exception.ErrorResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/hotel")
@@ -43,12 +36,17 @@ public class HotelController {
     }
 
     @GetMapping("/message/{messageId}")
-    public ResponseEntity<String> getHotelByMessageId(@PathVariable("messageId") String messageId) {
+    public ResponseEntity<?> getHotelByMessageId(@PathVariable("messageId") String messageId) {
         Hotel hotel = hotelService.getHotelByMessageId(messageId);
         if (hotel != null) {
-            return ResponseEntity.ok("Processado");
+            return ResponseEntity.ok("Processed");
         } else {
-            return ResponseEntity.notFound().build();
+            ErrorResponse errorResponse = new ErrorResponse(
+                    "Hotel not found",
+                    "No hotel found with the provided messageId",
+                    "HotelNotFound"
+            );
+            return ResponseEntity.status(404).body(errorResponse);
         }
     }
 }
