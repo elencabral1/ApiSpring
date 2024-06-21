@@ -10,7 +10,7 @@ public class HotelMapper {
         Hotel hotel = new Hotel();
         hotel.setHotelId(dto.hotelId());
         hotel.setEchoToken(dto.echoToken());
-        hotel.setReceivableDate(dto.receivableDate());
+        hotel.setReceivableDate(dto.timestamp());
         hotel.setSourceId(dto.sourceId());
         hotel.setRateId(dto.rateId());
 

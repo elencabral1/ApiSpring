@@ -10,10 +10,10 @@ public record HotelDto(
         @NotNull
         String echoToken,
         @NotNull
-        String receivableDate,
+        String timestamp,
         @NotNull
         String sourceId,
-        @NotNull
+        @NotNull(message = "HotelId cannot be null")
         String hotelId,
         @NotNull
         String rateId,
@@ -23,7 +23,7 @@ public record HotelDto(
 
         public HotelDto {
                 Objects.requireNonNull(echoToken, "Echo token must not be null");
-                Objects.requireNonNull(receivableDate, "Receivable Date must not be null");
+                Objects.requireNonNull(timestamp, "Receivable Date must not be null");
                 Objects.requireNonNull(sourceId, "Source ID must not be null");
                 Objects.requireNonNull(hotelId, "Hotel ID must not be null");
                 Objects.requireNonNull(rateId, "Ratw ID must not be null");

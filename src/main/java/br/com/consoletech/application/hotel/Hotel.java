@@ -41,7 +41,7 @@ public class Hotel {
 
     public Hotel(HotelDto hotelDto) {
         this.echoToken = hotelDto.echoToken();
-        this.receivableDate = hotelDto.receivableDate();
+        this.receivableDate = hotelDto.timestamp();
         this.messageId = UUID.randomUUID().toString() ;
         this.sourceId = hotelDto.sourceId();
         this.hotelId = hotelDto.hotelId();
