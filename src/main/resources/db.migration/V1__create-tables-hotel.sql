@@ -2,14 +2,14 @@ CREATE TABLE hotel (
     hotelId VARCHAR(255) NOT NULL,
     echoToken VARCHAR(100),
     receivableDate DATE,
-    messageId VARCHAR(255) NOT NULL PRIMARY KEY,
+    messageId INT AUTO_INCREMENT PRIMARY KEY,
     sourceId VARCHAR(255),
     rateId VARCHAR(255)
 );
 
 CREATE TABLE ratePrice (
     ratePriceId INT AUTO_INCREMENT PRIMARY KEY,
-    hotel_id VARCHAR(255),
+    messageId INT,
     roomTypeId VARCHAR(255),
     FOREIGN KEY (messageId) REFERENCES hotel(messageId)
 );

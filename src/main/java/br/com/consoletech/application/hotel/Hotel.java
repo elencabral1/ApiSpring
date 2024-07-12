@@ -21,8 +21,9 @@ public class Hotel {
     @Column(name = "receivableDate")
     private Date receivableDate;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "messageId", nullable = false)
-    private String messageId;
+    private Long messageId;
     @Column(name = "sourceId")
     private String sourceId;
     @Column(name = "hotelId", nullable = false)
@@ -35,14 +36,13 @@ public class Hotel {
 
 
     public Hotel() {
-        this.messageId = messageId;
+        this.messageId = null;
     }
 
 
     public Hotel(HotelDto hotelDto) {
         this.echoToken = hotelDto.echoToken();
         this.receivableDate = hotelDto.date();
-        this.messageId = hotelDto.messageId();
         this.sourceId = hotelDto.sourceId();
         this.hotelId = hotelDto.hotelId();
         this.rateId = hotelDto.rateId();
@@ -69,10 +69,10 @@ public class Hotel {
         this.receivableDate = receivableDate;
     }
 
-    public String getMessageId() { return messageId;
+    public Long getMessageId() { return messageId;
     }
 
-    public void setMessageId(String messageId) { this.messageId = messageId;
+    public void setMessageId(Long messageId) { this.messageId = messageId;
     }
 
     public String getSourceId() {

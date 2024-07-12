@@ -50,10 +50,11 @@ public class HotelController {
     }
 
     @GetMapping("/message/{messageId}")
-    public ResponseEntity<?> getHotelByMessageId(@PathVariable("messageId") String messageId) {
+    public ResponseEntity<?> getHotelByMessageId(@PathVariable("messageId") Long messageId) {
         Hotel hotel = hotelService.getHotelByMessageId(messageId);
         if (hotel != null) {
-            return ResponseEntity.ok("Processed");
+            String message = String.format("Processed: messageId %s", hotel.getMessageId());
+            return ResponseEntity.ok(message);
         } else {
             ErrorResponse errorResponse = new ErrorResponse(
                     "Hotel not found",
