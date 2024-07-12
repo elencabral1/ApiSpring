@@ -20,7 +20,7 @@ public class RatePrice {
     private Set<RatePeriod> priceList;
 
     @ManyToOne
-    @JoinColumn(name = "hotel_id", nullable = false)
+    @JoinColumn(name = "messageId", nullable = false)
     private Hotel hotel;
 
     public RatePrice(RatePriceDto dto) {
@@ -29,6 +29,21 @@ public class RatePrice {
                 .map(price -> new RatePeriod(price))
                 .collect(Collectors.toSet());
     }
+
+
+//    public ResponseEntity<?> getByRatePriceId(@PathVariable("ratePriceId") String ratePriceId) {
+//        RatePrice ratePrice = hotelService.getByRatePriceId(ratePriceId);
+//        if (ratePrice != null) {
+//            return ResponseEntity.ok("Processed");
+//        } else {
+//            ErrorResponse errorResponse = new ErrorResponse(
+//                    "RatePrice ID not found",
+//                    "No ratePrice ID found with the provided messageId",
+//                    "RatePrice ID NotFound"
+//            );
+//            return ResponseEntity.status(404).body(errorResponse);
+//        }
+//    }
 
     public RatePrice(RatePrice ratePrice){
         this.roomTypeId = ratePrice.roomTypeId;

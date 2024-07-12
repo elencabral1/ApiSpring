@@ -11,6 +11,7 @@ public class HotelMapper {
         hotel.setHotelId(dto.hotelId());
         hotel.setEchoToken(dto.echoToken());
         hotel.setReceivableDate(dto.date());
+        hotel.setMessageId(dto.messageId());
         hotel.setSourceId(dto.sourceId());
         hotel.setRateId(dto.rateId());
 
@@ -53,7 +54,7 @@ public class HotelMapper {
             return new RatePriceDto(ratePrice.getRoomTypeId(), prices);
         }).collect(Collectors.toSet());
 
-        return new HotelDto(hotel.getEchoToken(), hotel.getReceivableDate(), hotel.getSourceId(), hotel.getHotelId(), hotel.getRateId(), ratePrices);
+        return new HotelDto(hotel.getEchoToken(), hotel.getReceivableDate(), hotel.getMessageId(), hotel.getSourceId(), hotel.getHotelId(), hotel.getRateId(), ratePrices);
     }
 
 }

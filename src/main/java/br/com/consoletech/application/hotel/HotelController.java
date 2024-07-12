@@ -18,20 +18,34 @@ public class HotelController {
     }
 
     @PostMapping
-    public ResponseEntity<String> save(@RequestBody @Valid HotelDto hotelDto) {
+    public ResponseEntity<?> save(@RequestBody @Valid HotelDto hotelDto) {
         Hotel hotel = hotelService.saveHotel(hotelDto);
-        String message = String.format("Processado com sucesso: messageId %s", hotel.getMessageId());
-        return ResponseEntity.ok(message);
+        if (hotel != null) {
+            String message = String.format("Processed successfully: messageId %s", hotel.getMessageId());
+            return ResponseEntity.ok(message);
+        } else {
+            ErrorResponse errorResponse = new ErrorResponse(
+                    "Hotel not saved",
+                    "The hotel could not be saved with the provided details. Please check the input and try again.",
+                    "HotelSaveError"
+            );
+            return ResponseEntity.status(404).body(errorResponse);
+        }
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<HotelDto> getHotelById(@PathVariable("id") String hotelId) {
+    public ResponseEntity<?> getHotelById(@PathVariable("id") String hotelId) {
         Hotel hotel = hotelService.getHotelById(hotelId);
         if (hotel != null) {
             HotelDto hotelDto = HotelMapper.toDto(hotel);
             return ResponseEntity.ok(hotelDto);
         } else {
-            return ResponseEntity.notFound().build();
+            ErrorResponse errorResponse = new ErrorResponse(
+                    "Hotel not found",
+                    String.format("No hotel found with the provided ID: %s", hotelId),
+                    "HotelNotFound"
+            );
+            return ResponseEntity.status(404).body(errorResponse);
         }
     }
 
@@ -49,5 +63,7 @@ public class HotelController {
             return ResponseEntity.status(404).body(errorResponse);
         }
     }
+
+
 }
 

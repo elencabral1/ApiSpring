@@ -20,11 +20,11 @@ public class Hotel {
     private String echoToken;
     @Column(name = "receivableDate")
     private Date receivableDate;
-    @Column(name = "messageId", unique = true, nullable = false)
+    @Id
+    @Column(name = "messageId", nullable = false)
     private String messageId;
     @Column(name = "sourceId")
     private String sourceId;
-    @Id
     @Column(name = "hotelId", nullable = false)
     private String hotelId;
     @Column(name = "rateId")
@@ -32,19 +32,17 @@ public class Hotel {
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private Set<RatePrice> ratePrices;
 
+
+
     public Hotel() {
-        this.messageId = UUID.randomUUID().toString();
+        this.messageId = messageId;
     }
 
-    public Hotel(String hotelId){
-        this.hotelId = hotelId;
-        this.messageId = UUID.randomUUID().toString();
-    }
 
     public Hotel(HotelDto hotelDto) {
         this.echoToken = hotelDto.echoToken();
         this.receivableDate = hotelDto.date();
-        this.messageId = UUID.randomUUID().toString() ;
+        this.messageId = hotelDto.messageId();
         this.sourceId = hotelDto.sourceId();
         this.hotelId = hotelDto.hotelId();
         this.rateId = hotelDto.rateId();
@@ -52,6 +50,8 @@ public class Hotel {
                 .map(ratePriceDto -> new RatePrice(ratePriceDto))
                 .collect(Collectors.toSet());
     }
+
+
 
     public String getEchoToken() {
         return echoToken;
