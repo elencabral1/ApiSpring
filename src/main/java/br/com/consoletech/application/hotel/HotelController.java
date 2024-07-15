@@ -1,6 +1,9 @@
 package br.com.consoletech.application.hotel;
 
 import br.com.consoletech.application.exception.ErrorResponse;
+import br.com.consoletech.application.process.ProcessDto;
+import br.com.consoletech.application.process.ProcessService;
+import br.com.consoletech.application.process.ProcessStatus;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,16 +14,25 @@ import org.springframework.web.bind.annotation.*;
 public class HotelController {
 
     private final HotelService hotelService;
+    private final ProcessService processService;
+
 
     @Autowired
-    public HotelController(HotelService hotelService) {
+    public HotelController(HotelService hotelService, ProcessService processService) {
         this.hotelService = hotelService;
+        this.processService = processService;
     }
 
     @PostMapping
     public ResponseEntity<?> save(@RequestBody @Valid HotelDto hotelDto) {
         Hotel hotel = hotelService.saveHotel(hotelDto);
         if (hotel != null) {
+            ProcessDto processDto = new ProcessDto(
+                    hotel.getMessageId(),
+                    0,
+                    "Hotel created and awaiting processing"
+            );
+            processService.createProcess(processDto);
             String message = String.format("Processed successfully: messageId %s", hotel.getMessageId());
             return ResponseEntity.ok(message);
         } else {

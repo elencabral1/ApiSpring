@@ -29,3 +29,10 @@ CREATE TABLE pax (
     ratePeriodId INT,
     FOREIGN KEY (ratePeriodId) REFERENCES ratePeriod(ratePeriodId)
 );
+
+CREATE TABLE process (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    hotel_id VARCHAR(255) NOT NULL,
+    status INT NOT NULL,
+    detail VARCHAR(255)
+);
