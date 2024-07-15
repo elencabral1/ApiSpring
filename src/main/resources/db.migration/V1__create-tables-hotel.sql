@@ -1,7 +1,7 @@
 CREATE TABLE hotel (
     hotelId VARCHAR(255) NOT NULL,
     echoToken VARCHAR(100),
-    receivableDate DATE,
+    receivableDate VARCHAR(255),
     messageId INT AUTO_INCREMENT PRIMARY KEY,
     sourceId VARCHAR(255),
     rateId VARCHAR(255)

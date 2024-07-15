@@ -1,10 +1,7 @@
 package br.com.consoletech.application.hotel;
 
 import jakarta.persistence.*;
-
-import java.util.Date;
 import java.util.Set;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 import lombok.AllArgsConstructor;
@@ -19,7 +16,7 @@ public class Hotel {
     @Column(name = "echoToken")
     private String echoToken;
     @Column(name = "receivableDate")
-    private Date receivableDate;
+    private String receivableDate;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "messageId", nullable = false)
@@ -42,7 +39,7 @@ public class Hotel {
 
     public Hotel(HotelDto hotelDto) {
         this.echoToken = hotelDto.echoToken();
-        this.receivableDate = hotelDto.date();
+        this.receivableDate = hotelDto.timestamp();
         this.sourceId = hotelDto.sourceId();
         this.hotelId = hotelDto.hotelId();
         this.rateId = hotelDto.rateId();
@@ -61,11 +58,11 @@ public class Hotel {
         this.echoToken = echoToken;
     }
 
-    public Date getReceivableDate() {
+    public String getReceivableDate() {
         return receivableDate;
     }
 
-    public void setReceivableDate(Date receivableDate) {
+    public void setReceivableDate(String receivableDate) {
         this.receivableDate = receivableDate;
     }
 
